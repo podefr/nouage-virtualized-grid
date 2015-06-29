@@ -13,7 +13,7 @@
   "author": "Olivier Scherrer",
   "license": "MIT",
   "dependencies": {
-    "nouage": "0.0.1-beta",
+    "nouage": "0.0.3-beta",
     "seam": "0.0.3"
   }
 }

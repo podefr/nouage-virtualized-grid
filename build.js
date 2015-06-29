@@ -342,6 +342,7 @@ function toArray(list, index) {
 }
 
 },{}],7:[function(require,module,exports){
+/*jslint node: true */
 /**
  * @license nouage https://github.com/podefr/nouage
  *
@@ -479,13 +480,6 @@ module.exports = function BindPluginConstructor($model, $bindings) {
              * @private
              */
             _nb = null,
-
-            /**
-             * Keep track by item of the dom elements that are created
-             * @type {Window.WeakMap}
-             * @private
-             */
-            _domMap = new WeakMap(),
 
             /**
              * Keep track by index of the dom elements that are created
@@ -638,26 +632,6 @@ module.exports = function BindPluginConstructor($model, $bindings) {
         };
 
         /**
-         * Remove an item from the dom given the item itself
-         * @param item
-         * @returns {boolean}
-         */
-        this.removeItemByItem = function removeItemByItem(item) {
-            var domElement = _domMap.get(item);
-            var index;
-            if (domElement) {
-                _rootNode.removeChild(domElement);
-                _domMap.delete(item);
-                index = _items.indexOf(domElement);
-                delete _items[index];
-                _removeObserversForId(index);
-                return true;
-            } else {
-                return false;
-            }
-        };
-
-        /**
          * create a new node. Actually makes a clone of the initial one
          * and adds pluginname_id to each node, then calls plugins.apply to apply all plugins
          * @private
@@ -675,8 +649,6 @@ module.exports = function BindPluginConstructor($model, $bindings) {
                 });
 
                 _items[id] = newNode;
-
-                _domMap.set(_model[id], newNode);
                 _plugins.apply(newNode);
                 return newNode;
             }
@@ -769,9 +741,8 @@ module.exports = function BindPluginConstructor($model, $bindings) {
         _observer.observe("added", itemRenderer.render, itemRenderer);
 
         // If an item is deleted
-        _observer.observe("splice", function (event) {
-            event.removed.forEach(itemRenderer.removeItemByItem, itemRenderer);
-        });
+        _observer.observe("splice", itemRenderer.render, itemRenderer);
+
         this.setItemRenderer(idItemRenderer, itemRenderer);
     };
 
@@ -867,9 +838,9 @@ module.exports = function BindPluginConstructor($model, $bindings) {
         }
 
         // Watch for changes
-        this.observers[prefixedName] = this.observers[prefixedName] || [];
+        this.observers["" + id || name] = this.observers["" + id || name] || [];
 
-        this.observers[prefixedName].push(_observer.observeValue(prefixedName, function (event) {
+        this.observers["" + id || name].push(_observer.observeValue(prefixedName, function (event) {
             var value = event.value;
 
             if (!this.execBinding.apply(this,
