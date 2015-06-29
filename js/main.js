@@ -5,8 +5,8 @@
 	// The view we want to attach behavior to
 	var view = document.querySelector(".container");
 
-	// Create the observable-store with 1M items
-	window.model = getData(1000);
+	// Create the observable-store with 100k items
+	window.model = getData(100000);
 
 	window.createItem = createItem;
 
