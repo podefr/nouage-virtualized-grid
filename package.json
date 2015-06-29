@@ -1,0 +1,19 @@
+{
+  "name": "nouage-virtualized-grid",
+  "version": "1.0.0",
+  "description": "A demo of a virtualized data grid using Nouage",
+  "main": "build.js",
+  "scripts": {
+    "build": "browserify -e ./js/main.js -o build.js",
+    "watch": "watchify -e ./js/main.js -o build.js"
+  },
+  "keywords": [
+    "Nouage"
+  ],
+  "author": "Olivier Scherrer",
+  "license": "MIT",
+  "dependencies": {
+    "nouage": "0.0.1-beta",
+    "seam": "0.0.3"
+  }
+}
