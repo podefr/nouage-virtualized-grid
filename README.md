@@ -30,7 +30,7 @@ And some HTML that binds properties of these objects to some dom element, to gen
 <td data-model="bind: innerHTML, quantity1"></td>
 ```
 
-After we've wired up the two together using Seam and Nouage, we can directly update the dom by manipulating the model:
+After we've wired up the two together using [Seam](https://github.com/flams/seam) and [Nouage](https://github.com/podefr/nouage), we can directly update the dom by manipulating the model:
 
 ```js
 // This will directly update the DOM, thanks to Object.observe
