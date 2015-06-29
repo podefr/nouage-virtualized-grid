@@ -2,6 +2,42 @@
 
 This demo is the same as the [1M virtualized grid](https://github.com/podefr/data-binding-virtualized-grid), except that it's based on _nouage_, which is a data-binding plugin based on Object.observe.
 
+##What are we doing here?
+
+We have an array of objects such as:
+
+```js
+var model = [{ 
+    continent: "North America",
+    color: "Lightblue",
+    quantity: 30000,
+    ...
+ }, {
+    continent: "Europe",
+	color: "yellow",
+	quantity: 600,
+	...
+ }, {
+    ...
+ }]
+```
+
+And some HTML that binds properties of these objects to some dom element, to generate a virtualized grid.
+
+```html
+<td data-model="bind: innerHTML, continent"></td>
+<td data-model="bind: innerHTML, color"></td>
+<td data-model="bind: innerHTML, quantity1"></td>
+```
+
+After we've wired up the two together using Seam and Nouage, we can directly update the dom by manipulating the model:
+
+```js
+// This will directly update the DOM, thanks to Object.observe
+model[1254].continent = "Asia";
+```
+
+
 ### The html for generating the grid
 
 ```html
